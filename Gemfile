@@ -54,3 +54,5 @@ end
 
 gem "graphql", "~> 2.2"
 gem "graphiql-rails", group: :development
+
+gem "httparty", "~> 0.21.0"

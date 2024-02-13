@@ -19,10 +19,10 @@ module Types
     end
 
     field :organization, Types::OrganizationType, description: "Fetches data related to a specific customer organization." do
-      argument :id, ID, required: true, description: "The ID of the organization."
+      argument :id, String, required: true, description: "The ID of the organization (which is a string)."
     end
     def organization(id:)
-      Organization.new(id, "Test Org")
+      Organization.new(id)
     end
   end
 end
