@@ -3,8 +3,10 @@ class Organization
 
   def initialize(id)
     @id = id
-    @projects = Rails.cache.fetch("Projects for org: #{id}", expires_in: 5.minutes) do
-      Project.all_for_organization(self)
-    end
+    @projects = Project.all_for_organization(self)
+  end
+
+  def project(id:)
+    projects.find { |project| project.id == id }
   end
 end
