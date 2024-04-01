@@ -1,5 +1,5 @@
 class Alert
-  attr_accessor :id, :name, :project, :attributes
+  attr_accessor :id, :name, :project, :base_attributes
 
   def self.all_for_project(project)
     Rails.cache.fetch("Alerts for project: #{project.id}", expires_in: 5.minutes) do
@@ -9,18 +9,18 @@ class Alert
     end
   end
 
-  def initialize(id, attributes, project)
+  def initialize(id, base_attributes, project)
     @id = id
-    @name = attributes["name"] || "[no name found]"
+    @name = base_attributes["name"] || "[no name found]"
     @project = project
-    @attributes = attributes
+    @base_attributes = base_attributes
   end
 
   def queries
     queries = []
-    queries = queries.union(attributes["metric-queries"]) if attributes.has_key?("metric-queries")
-    if attributes.has_key?("composite-alert")
-      attributes.dig("composite-alert", "alerts").each do |alert|
+    queries = queries.union(base_attributes["metric-queries"]) if base_attributes.has_key?("metric-queries")
+    if base_attributes.has_key?("composite-alert")
+      base_attributes.dig("composite-alert", "alerts").each do |alert|
         queries = queries.union(alert["queries"])
       end
     end
