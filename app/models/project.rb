@@ -22,4 +22,13 @@ class Project
   def alert(id:)
     alerts.find { |alert| alert.id == id }
   end
+
+  def alert_destinations
+    AlertDestination.all_for_project(self)
+  end
+
+  def alert_destination(id:)
+    alert_destinations.find { |dest| dest.id == id }
+  end
+
 end

@@ -26,6 +26,12 @@ module Types
 
     field :is_multi_alert, Boolean, "Indicates whether this alert is a multi-alert"
 
-    field :queries, [String], description: "The query strings of any UQL queries found. This field may not be particularly useful as-is, since it mixes together all different kinds of alerts and queries. It is provided mostly as an example of doing some transformations of query data from the backend."
+    field :all_queries, [String], "The query strings of any UQL queries found. This field may not be particularly useful as-is, since it mixes together all different kinds of alerts and queries. It is provided mostly as an example of doing some transformations of query data from the backend."
+
+    field :alerting_rules, [Types::AlertingRuleType], "The set of rules defining how to send notifications when this alert is triggered"
+
+    field :snoozed, Boolean, "Indicates whether this alert is currenttly snoozed", method: :snoozed?
+
+    field :snooze_ends_at, Int, "MICROSECONDS since the epoch when the current snooze ends (or nil if not currently snoozed"
   end
 end
