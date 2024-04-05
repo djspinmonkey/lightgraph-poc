@@ -28,11 +28,7 @@ class Alert
   def snooze_ends_at
     Rails.cache.fetch("Alert snooze status for alert: #{id}", expires_in: 5.minutes) do
       raw = LSPublicAPI.get("#{project.org.id}/projects/#{project.id}/metric_alerts/#{id}/snoozes")
-      if raw.empty?
-        return nil
-      else
-        return raw.first["data"]["attributes"]["ends-micros"]
-      end
+      raw.empty? ?  nil : raw.dig(0, "attributes", "ends-micros")
     end
   end
 
@@ -52,6 +48,10 @@ class Alert
     rules.collect do |raw|
       AlertingRule.new(raw["id"], project, raw["message-destination-client-id"], raw["update-interval-ms"])
     end
+  end
+
+  def destinations
+    alerting_rules.collect { |rule| rule.destination }.uniq
   end
 
   # Attributes directly on base alert

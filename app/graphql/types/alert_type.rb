@@ -30,8 +30,10 @@ module Types
 
     field :alerting_rules, [Types::AlertingRuleType], "The set of rules defining how to send notifications when this alert is triggered"
 
+    field :destinations, [Types::AlertDestinationType], "The set of destinations this alert will be sent to when triggered (as defined by the alerting rules). This is a convenience field to avoid having to go through the alerting rules if all you care about is the destination."
+
     field :snoozed, Boolean, "Indicates whether this alert is currenttly snoozed", method: :snoozed?
 
-    field :snooze_ends_at, Int, "MICROSECONDS since the epoch when the current snooze ends (or nil if not currently snoozed"
+    field :snooze_ends_at, GraphQL::Types::BigInt, "MICROSECONDS since the epoch when the current snooze ends (or nil if not currently snoozed"
   end
 end

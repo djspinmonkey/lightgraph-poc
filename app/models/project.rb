@@ -3,7 +3,8 @@ class Project
 
   def self.all_for_organization(org)
     Rails.cache.fetch("Projects for org: #{org.id}", expires_in: 5.minutes) do
-      LSPublicAPI.get("#{org.id}/projects").collect do |project|
+      projects = LSPublicAPI.get("#{org.id}/projects") || []
+      projects.collect do |project|
         Project.new(project["id"], project["attributes"]["name"], org)
       end
     end
