@@ -21,8 +21,9 @@ module Types
     field :organization, Types::OrganizationType, description: "Fetches data related to a specific customer organization." do
       argument :id, String, required: true, description: "The ID of the organization (which is a string)."
     end
-    def organization(id:)
-      Organization.new(id)
-    end
+    def organization(id:) = Organization.new(id)
+
+    field :actor, Types::ActorType, description: "Information about the requestor and this test server."
+    def actor = "unused" # TODO: There's probably a better way to do this.
   end
 end
