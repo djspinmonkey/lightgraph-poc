@@ -4,6 +4,13 @@ This is a "cheap and cheerful" throwaway version of a GraphQL API Gateway, slapp
 
 ## How to run the LightGraph POC locally
 
+As a prerequisite, you'll need Ruby and the Bundler gem installed:
+
+```shell
+brew install ruby
+gem install bundler
+```
+
 Make sure you have defined these environment variables:
 
 ```shell
